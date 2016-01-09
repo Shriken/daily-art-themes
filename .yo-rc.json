@@ -1,8 +1,0 @@
-{
-  "generator-react-webpack": {
-    "app-name": "dailyArtThemes",
-    "architecture": false,
-    "styles-language": "css",
-    "component-suffix": "js"
-  }
-}

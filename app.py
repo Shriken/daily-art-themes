@@ -14,6 +14,11 @@ client = MongoClient()
 def home():
     return render_template('home.html')
 
+@app.route('/submit-work')
+@utils.require_login
+def submit_work():
+    return render_template('submit-work.html')
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if 'logged_in' in session:

@@ -1,5 +1,13 @@
 <html>
 <body>
+  <div class='messages'>
+    <ul>
+    {% for message in get_flashed_messages() %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  </div>
+
   <a href='submit-work'>submit work</a><br>
   <a href='gallery'>gallery</a><br>
   <br>

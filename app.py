@@ -1,3 +1,4 @@
+from datetime import date
 from flask import Flask, render_template, request, session, flash, redirect, url_for
 import os
 from pymongo import MongoClient
@@ -13,6 +14,10 @@ app.config['UPLOAD_FOLDER'] = config.UPLOAD_FOLDER
 
 client = MongoClient()
 
+state = {
+    'currentTheme': 'no theme'
+}
+
 @app.route('/')
 @utils.require_login
 def home():
@@ -26,17 +31,45 @@ def submit_work():
 
     # POST
     # save any files of allowed filetypes
-    for f in request.files.getlist('images'):
+    files = request.files.getlist('images')
+    for f in files:
+        # if the file is an appropriate type, save it
         if config.allowed_file(f.filename):
-            # if the file is an appropriate type, save it
+            # get the full path name
+            themeFolder = secure_filename(state['currentTheme'])
+            today = date.today()
+            dayFolder = '%s-%s-%s' % (today.year, today.month, today.day)
             filename = secure_filename(f.filename)
-            f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            fullPath = os.path.join(
+                app.config['UPLOAD_FOLDER'],
+                themeFolder,
+                dayFolder,
+                filename
+            )
+
+            # make directories if necessary
+            if not os.path.exists(fullPath):
+                os.makedirs(os.path.join(
+                    app.config['UPLOAD_FOLDER'],
+                    themeFolder,
+                    dayFolder,
+                ))
+
+            # save file
+            f.save(fullPath)
             flash('uploaded image: %s' % f.filename)
         else:
             # otherwise inform the user they fucked up
             flash('bad image type: %s' % f.filename)
 
     return redirect(url_for('home'))
+
+@app.route('/gallery')
+@utils.require_login
+def gallery():
+    templateArgs = {}
+    templateArgs['themes'] = os.listdir(app.config['UPLOAD_FOLDER'])
+    return render_template('gallery.html', templateArgs=templateArgs)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

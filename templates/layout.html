@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+<head>
+  <title>Daily Art</title>
+  {% block includes %}{% endblock%}
+</head>
+<body>
+  <div class='page'>
+    {% with messages = get_flashed_messages() %}
+        <ul class='flash-list'>
+        {% for message in messages %}
+          <li class='flash'>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      </div>
+    {% endwith %}
+
+    {% block body %}{% endblock %}
+  </div>
+</body>
+</html>

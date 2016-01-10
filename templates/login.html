@@ -1,17 +1,8 @@
-<html>
-<body>
-  <div class='messages'>
-    <ul>
-    {% for message in get_flashed_messages() %}
-      <li>{{ message }}</li>
-    {% endfor %}
-    </ul>
-  </div>
-
+{% extends 'layout.html' %}
+{% block body %}
   <form method='post'>
     Log in<br>
     <input type='password' name='password' placeholder='password' /><br>
     <input type='submit' value='Log in'>
   </form>
-</body>
-</html>
+{% endblock %}

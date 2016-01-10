@@ -1,7 +1,5 @@
-<html>
-<head>
-  <style>
-  </style>
+{% extends 'layout.html' %}
+{% block includes %}
   <link
     rel='stylesheet'
     type='text/css'
@@ -9,8 +7,8 @@
    />
   <script src='{{ url_for('static', filename='js/submit-work.js') }}'>
   </script>
-</head>
-<body>
+{% endblock %}
+{% block body %}
   submit work here
 
   <div id='image-holder'>
@@ -21,6 +19,10 @@
     enctype='multipart/form-data'
   >
     <input
+      type='text'
+      placeholder='your first name'
+    />
+    <input
       type='file'
       name='images'
       multiple
@@ -29,5 +31,4 @@
     /><br>
     <input type='submit'>
   </form>
-</body>
-</html>
+{% endblock %}

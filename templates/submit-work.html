@@ -16,8 +16,17 @@
   <div id='image-holder'>
   </div>
 
-  <form method='post'>
-    <input type='file' multiple onchange='handleFiles(this.files)'/><br>
+  <form
+    method='post'
+    enctype='multipart/form-data'
+  >
+    <input
+      type='file'
+      name='images'
+      multiple
+      onchange='handleFiles(this.files)'
+      accept='image/*'
+    /><br>
     <input type='submit'>
   </form>
 </body>

@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+{% block body %}
+  <b>Theme:</b> {{ currentTheme }}<br>
+  <br>
+  <form method='POST'>
+    <input
+      type='text'
+      name='theme'
+      placeholder='theme'
+    /><br>
+    <input type='submit'/>
+  </form>
+  <br>
+  <a href='/'>back</a>
+{% endblock %}

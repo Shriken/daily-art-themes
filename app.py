@@ -15,13 +15,37 @@ app.config['UPLOAD_FOLDER'] = config.UPLOAD_FOLDER
 client = MongoClient()
 
 state = {
-    'currentTheme': 'no theme'
+    'currentTheme': 'no theme',
+    'currentSubject': 'no subject'
 }
 
 @app.route('/')
 @utils.require_login
 def home():
-    return render_template('home.html')
+    templateArgs = {
+        'currentTheme': state['currentTheme'],
+        'currentSubject': state['currentSubject']
+    }
+
+    return render_template('home.html', **templateArgs)
+
+@app.route('/set-theme', methods=['GET', 'POST'])
+@utils.require_login
+def setTheme():
+    templateArgs = {
+        'currentTheme': state['currentTheme'],
+        'currentSubject': state['currentSubject']
+    }
+
+    if request.method == 'POST':
+        if request.form['theme']:
+            state['currentTheme'] = request.form['theme']
+            flash('theme set')
+            return redirect(url_for('home'))
+        else:
+            flash('bad theme; theme not set')
+
+    return render_template('set-theme.html', **templateArgs)
 
 @app.route('/submit-work', methods=['GET', 'POST'])
 @utils.require_login

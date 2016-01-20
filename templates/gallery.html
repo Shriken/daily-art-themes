@@ -1,6 +1,12 @@
 {% extends 'layout.html' %}
 {% block body %}
-  {% for theme in templateArgs['themes'] %}
-    {{ theme }}
-  {% endfor %}
+  {% if templateArgs['themes'] %}
+    <ul class='themes'>
+      {% for theme in templateArgs['themes'] %}
+        <li class='theme'>{{ theme }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  <br>
+  <a href='/'>back</a>
 {% endblock %}
